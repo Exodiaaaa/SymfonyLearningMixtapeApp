@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use function Symfony\Component\String\u;
 
-class MixtapeController
+class MixtapeController extends AbstractController
 {
     /**
      * @return Response
@@ -14,7 +15,17 @@ class MixtapeController
     #[Route('/')]
     public function home(): Response
     {
-        return new Response('Title: Mickel Jackson');
+        $songs=[
+            ['song'=>'Gangsta\'s Paradise' ,'singer'=> 'Coolio'],
+            ['song'=>'Alone' ,'singer'=> 'Maduk'],
+            ['song'=>'Die of you' ,'singer'=> 'Grabitzz'],
+            ['song'=>'Rendez-vous' ,'singer'=> 'tunsi'],
+
+        ];
+        return $this->render('mixtape/home.html.twig', [
+            'title'=>'Mickel Jackson',
+            'songs'=>$songs
+        ]);
     }
 
     /**

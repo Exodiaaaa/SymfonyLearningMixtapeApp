@@ -14,7 +14,7 @@ class SongApiController extends AbstractController
      * @param int $id
      * @return Response
      */
-    #[Route('/api/songs/{id<\d+>}', methods: ['GET'])]
+    #[Route('/api/songs/{id<\d+>}', methods: ['GET'], name: 'api_songs_get_one')]
     public function getSong(int $id, LoggerInterface $logger) : Response
     {
         $song = [

@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 use function Symfony\Component\String\u;
 
 class MixtapeController extends AbstractController
@@ -12,8 +13,8 @@ class MixtapeController extends AbstractController
     /**
      * @return Response
      */
-    #[Route('/')]
-    public function home(): Response
+    #[Route('/', name: 'app_homepage')]
+    public function home(Environment $twig): Response
     {
         $songs=[
             ['song'=>'Gangsta\'s Paradise' ,'singer'=> 'Coolio'],
@@ -32,15 +33,13 @@ class MixtapeController extends AbstractController
      * @param string|null $slug
      * @return Response
      */
-    #[Route('/browse/{slug}')]
+    #[Route('/browse/{slug}', name: 'app_browse')]
     public function browse(string $slug = null): Response
     {
-        if ($slug) {
-            $title = 'Type: '.u(str_replace('-', ' ', $slug))->title(true);
-        } else {
-            $title = 'All types';
-        }
+        $genre = $slug ? u(str_replace('-', ' ', $slug))->title(true) : null;
 
-        return new Response($title);
+        return $this->render('mixtape/browse.html.twig', [
+            'genre'=>$genre
+        ]);
     }
 }
